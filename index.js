@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "50242929548";
+const WHATSAPP_NUMBER = "50242909548";
 
 const contactForm = document.getElementById("contact-form");
 
@@ -101,3 +101,90 @@ const footerYear = document.getElementById("footer-year");
 if (footerYear) {
   footerYear.textContent = new Date().getFullYear();
 }
+
+const WHATSAPP_FLOAT_NUMBER = "50242909548";
+const whatsappFloat = document.getElementById("whatsapp-float");
+const whatsappBadge = document.getElementById("whatsapp-badge");
+const whatsappChatWindow = document.getElementById("whatsapp-chat-window");
+const whatsappChatClose = document.getElementById("whatsapp-chat-close");
+const whatsappChatForm = document.getElementById("whatsapp-chat-form");
+const whatsappChatInput = document.getElementById("whatsapp-chat-input");
+
+function toggleWhatsappChat(forceOpen) {
+  if (!whatsappChatWindow) return;
+  const isHidden = whatsappChatWindow.hasAttribute("hidden");
+  const open = forceOpen !== undefined ? forceOpen : isHidden;
+
+  if (open) {
+    whatsappChatWindow.removeAttribute("hidden");
+    whatsappFloat.setAttribute("aria-expanded", "true");
+    whatsappChatInput.focus();
+    hideWhatsappBadge();
+  } else {
+    whatsappChatWindow.setAttribute("hidden", "");
+    whatsappFloat.setAttribute("aria-expanded", "false");
+  }
+}
+
+function hideWhatsappBadge() {
+  if (whatsappBadge) whatsappBadge.hidden = true;
+}
+
+function showWhatsappBadge() {
+  if (!whatsappBadge) return;
+  if (whatsappChatWindow.hasAttribute("hidden")) whatsappBadge.hidden = false;
+}
+
+if (whatsappFloat) {
+  whatsappFloat.addEventListener("click", () => toggleWhatsappChat());
+
+  if (!sessionStorage.getItem("whatsappBadgeShown")) {
+    setTimeout(() => {
+      showWhatsappBadge();
+      sessionStorage.setItem("whatsappBadgeShown", "1");
+    }, 4000);
+  }
+}
+
+if (whatsappChatClose) {
+  whatsappChatClose.addEventListener("click", () => toggleWhatsappChat(false));
+}
+
+function sendWhatsappChatMessage() {
+  const message = whatsappChatInput.value.trim();
+  if (!message) return;
+
+  const url = `https://wa.me/${WHATSAPP_FLOAT_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank", "noopener");
+
+  whatsappChatInput.value = "";
+  whatsappChatInput.style.height = "auto";
+  toggleWhatsappChat(false);
+}
+
+if (whatsappChatInput) {
+  whatsappChatInput.addEventListener("input", () => {
+    whatsappChatInput.style.height = "auto";
+    whatsappChatInput.style.height = `${whatsappChatInput.scrollHeight}px`;
+  });
+
+  whatsappChatInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendWhatsappChatMessage();
+    }
+  });
+}
+
+if (whatsappChatForm) {
+  whatsappChatForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    sendWhatsappChatMessage();
+  });
+}
+
+document.addEventListener("click", (event) => {
+  if (!whatsappChatWindow || whatsappChatWindow.hasAttribute("hidden")) return;
+  const clickedInsideWidget = event.target.closest("#whatsapp-widget");
+  if (!clickedInsideWidget) toggleWhatsappChat(false);
+});
