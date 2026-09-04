@@ -212,7 +212,7 @@ module.exports = {
 - [ ] **Step 6: Correr el test y confirmar que pasa**
 
 Run: `cd functions && node --test test/chatLogic.test.js`
-Expected: PASS — 8 tests, 0 fallas.
+Expected: PASS — 9 tests, 0 fallas.
 
 - [ ] **Step 7: Agregar `functions` y `emulators` a `firebase.json`**
 
@@ -767,7 +767,7 @@ Expected: PASS — 4 tests, 0 fallas.
 - [ ] **Step 5: Correr toda la suite de `functions/` junta**
 
 Run: `cd functions && npm test`
-Expected: PASS — 18 tests en total (chatLogic + systemPrompt + anthropicClient + firestoreLog + orchestrator), 0 fallas.
+Expected: PASS — 21 tests en total (chatLogic + systemPrompt + anthropicClient + firestoreLog + orchestrator), 0 fallas.
 
 - [ ] **Step 6: Commit**
 
@@ -908,7 +908,7 @@ EOF
 **Files:**
 - Create: `firestore.rules`
 - Modify: `firebase.json`
-- Create: `package.json` (raíz) — agregar devDependency
+- Modify: `package.json` (raíz, ya existe con la dependencia `firebase`) — agregar devDependency
 - Test: `test/firestore.rules.test.js`
 
 **Interfaces:** ninguna (task de infraestructura/seguridad, sin código consumido por otros tasks).
