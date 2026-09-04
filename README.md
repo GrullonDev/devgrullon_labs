@@ -9,11 +9,11 @@ devgrullon_labs/
 ├── firebase.json          # Config de Firebase Hosting, Functions y Firestore
 ├── .firebaserc            # Proyecto de Firebase asociado (con target de Hosting)
 ├── firestore.rules        # Reglas de seguridad de Firestore (acceso solo desde el backend)
-├── functions/              # Cloud Function que conecta el chat con la API de Claude
+├── functions/              # Cloud Function que conecta el chat con la API de DeepSeek
 │   ├── index.js            # Función callable `chatWithAssistant`
 │   ├── chatLogic.js         # Validación de mensajes y tope de costo por sesión
 │   ├── systemPrompt.js      # Instrucciones del asistente (la oferta real del sitio)
-│   ├── anthropicClient.js   # Construcción del request a Claude y parseo de la respuesta
+│   ├── deepseekClient.js    # Construcción del request a DeepSeek y parseo de la respuesta
 │   ├── firestoreLog.js      # Guardado de cada conversación en Firestore
 │   └── orchestrator.js      # Une todo lo anterior
 └── public/                # Todo lo que se publica con `firebase deploy`
@@ -32,7 +32,7 @@ devgrullon_labs/
 - **Hero**: mensaje principal, llamado a la acción hacia WhatsApp y enlace al portafolio avanzado, con una animación de fondo en `<canvas>` (red de nodos conectados).
 - **Oferta**: qué incluye el paquete de Q500 (diseño responsive, estructura de secciones, etc.).
 - **Formulario de contacto**: envía los datos capturados como un mensaje pre-armado a WhatsApp (no usa backend ni almacenamiento).
-- **Asistente de chat con IA**: botón flotante que abre una conversación real con un asistente basado en Claude, que responde preguntas sobre la oferta del sitio y, cuando conviene, ofrece un botón para continuar la conversación por WhatsApp directamente con Jorge. Cada conversación se guarda en Firestore.
+- **Asistente de chat con IA**: botón flotante que abre una conversación real con un asistente basado en DeepSeek, que responde preguntas sobre la oferta del sitio y, cuando conviene, ofrece un botón para continuar la conversación por WhatsApp directamente con Jorge. Cada conversación se guarda en Firestore.
 
 ## Tecnologías
 
@@ -56,7 +56,7 @@ firebase serve --only hosting
 
 El chat con IA necesita configuración adicional que no viene en el repo (por seguridad):
 
-1. Crear una API key en [console.anthropic.com](https://console.anthropic.com) y guardarla como secreto: `firebase functions:secrets:set ANTHROPIC_API_KEY`.
+1. Crear una API key en [platform.deepseek.com](https://platform.deepseek.com) y guardarla como secreto: `firebase functions:secrets:set DEEPSEEK_API_KEY` (el comando pedirá el valor en un segundo paso — no lo pases como argumento).
 2. Registrar un proveedor reCAPTCHA v3 en Firebase Console → App Check, y pegar ese site key en `public/firebase-init.js` (reemplazando `RECAPTCHA_SITE_KEY`).
 3. Confirmar que la base de datos de Firestore existe en el proyecto de Firebase.
 4. Desplegar con `firebase deploy --only functions,firestore:rules,hosting:devgrullonlabs`.

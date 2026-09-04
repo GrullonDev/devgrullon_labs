@@ -2,20 +2,19 @@ const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
-const Anthropic = require("@anthropic-ai/sdk");
 
 const { handleChatRequest } = require("./orchestrator");
-const { buildAssistantRequest, parseAssistantResponse } = require("./anthropicClient");
+const { buildAssistantRequest, parseAssistantResponse, callDeepSeek } = require("./deepseekClient");
 const { SYSTEM_PROMPT } = require("./systemPrompt");
 const { logTurn } = require("./firestoreLog");
 
 initializeApp();
 
-const anthropicApiKey = defineSecret("ANTHROPIC_API_KEY");
+const deepseekApiKey = defineSecret("DEEPSEEK_API_KEY");
 const SESSION_ID_PATTERN = /^[0-9a-f-]{36}$/i;
 
 exports.chatWithAssistant = onCall(
-  { secrets: [anthropicApiKey], enforceAppCheck: true, region: "us-central1" },
+  { secrets: [deepseekApiKey], enforceAppCheck: true, region: "us-central1" },
   async (request) => {
     const { sessionId, messages } = request.data || {};
 
@@ -26,7 +25,6 @@ exports.chatWithAssistant = onCall(
       throw new HttpsError("invalid-argument", "sessionId inválido.");
     }
 
-    const anthropic = new Anthropic({ apiKey: anthropicApiKey.value() });
     const db = getFirestore();
     const sessionDocRef = db.collection("chat_leads").doc(sessionId);
 
@@ -49,12 +47,13 @@ exports.chatWithAssistant = onCall(
         trustedUserMessageCount,
         callClaude: async (reqMessages) => {
           try {
-            const apiResponse = await anthropic.messages.create(
-              buildAssistantRequest(reqMessages, SYSTEM_PROMPT)
+            const apiResponse = await callDeepSeek(
+              buildAssistantRequest(reqMessages, SYSTEM_PROMPT),
+              deepseekApiKey.value()
             );
             return parseAssistantResponse(apiResponse);
-          } catch (claudeError) {
-            console.error("Falló la llamada a Claude", claudeError);
+          } catch (assistantError) {
+            console.error("Falló la llamada al asistente de IA", assistantError);
             return {
               reply:
                 "Tuve un problema técnico para responderte en este momento. Escríbele directo a Jorge:",
