@@ -317,13 +317,26 @@
       </div>
     </section>
 
+    <section id="privacidad" class="privacy-note">
+      <div class="privacy-note-content">
+        <h2>Aviso de privacidad</h2>
+        <p>
+          Si usas el asistente de chat de este sitio, guardamos el contenido de esa
+          conversación (los mensajes que escribes y las respuestas del asistente) para
+          poder darte seguimiento y mejorar las respuestas. No se usa para otro fin ni
+          se comparte con terceros. No necesitas dar tu nombre real ni ningún dato
+          personal para usar el chat.
+        </p>
+      </div>
+    </section>
+
     <footer class="site-footer">
       <div class="footer-content">
         <span class="footer-brand">DevGrullon Labs</span>
         <span class="footer-copy">&copy; <span id="footer-year"></span> Todos los derechos reservados.</span>
         <nav class="footer-links">
           <a href="#">Términos y condiciones</a>
-          <a href="#">Aviso de privacidad</a>
+          <a href="#privacidad">Aviso de privacidad</a>
         </nav>
       </div>
     </footer>
@@ -343,12 +356,7 @@
             </svg>
           </button>
         </div>
-        <div class="whatsapp-chat-body">
-          <div class="whatsapp-chat-bubble">
-            ¡Hola! 👋 Soy Jorge, de DevGrullon Labs. Escribe tu mensaje y te
-            responderé por WhatsApp lo antes posible.
-          </div>
-        </div>
+        <div class="whatsapp-chat-body" id="whatsapp-chat-messages" aria-live="polite"></div>
         <form class="whatsapp-chat-form" id="whatsapp-chat-form">
           <textarea
             id="whatsapp-chat-input"
@@ -382,5 +390,6 @@
 
     <script src="index.js"></script>
     <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="chat-widget.js"></script>
   </body>
 </html>
