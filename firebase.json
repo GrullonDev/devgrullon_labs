@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "devgrullonlabs",
     "public": "public",
     "ignore": [
       "firebase.json",

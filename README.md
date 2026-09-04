@@ -6,11 +6,16 @@ Landing page de **DevGrullon Labs**, un servicio de desarrollo web profesional q
 
 ```
 devgrullon_labs/
-├── index.html   # Estructura y contenido del sitio (hero, oferta, secciones, formulario)
-├── index.css    # Estilos del sitio
-├── index.js     # Interactividad: animación del hero, mini-chat de WhatsApp, formulario de contacto
-└── assets/      # Imágenes (logo, portada)
+├── firebase.json      # Config de Firebase Hosting (sirve la carpeta public/)
+├── .firebaserc        # Proyecto de Firebase asociado
+└── public/            # Todo lo que se publica con `firebase deploy`
+    ├── index.html     # Estructura y contenido del sitio (hero, oferta, secciones, formulario)
+    ├── index.css      # Estilos del sitio
+    ├── index.js       # Interactividad: animación del hero, mini-chat de WhatsApp, formulario de contacto
+    └── assets/        # Imágenes (logo, portada)
 ```
+
+> Importante: edita siempre los archivos dentro de `public/`. Firebase Hosting despliega esa carpeta tal cual (`"public": "public"` en `firebase.json`); cualquier cambio fuera de ella no se verá reflejado en el sitio publicado.
 
 ## Contenido del sitio
 
@@ -25,10 +30,16 @@ Sitio estático hecho con HTML, CSS y JavaScript puro (sin frameworks ni depende
 
 ## Cómo ejecutarlo localmente
 
-No requiere instalación. Basta con abrir `index.html` en un navegador, o servirlo con cualquier servidor estático, por ejemplo:
+No requiere instalación. Basta con abrir `public/index.html` en un navegador, o servirlo con cualquier servidor estático, por ejemplo:
 
 ```bash
-npx serve .
+npx serve public
+```
+
+También puedes previsualizarlo exactamente como lo serviría Firebase Hosting con:
+
+```bash
+firebase serve --only hosting
 ```
 
 ## Contacto

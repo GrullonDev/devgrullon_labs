@@ -1,5 +1,15 @@
 {
   "projects": {
-    "default": "dev-grullon-labs"
-  }
+    "default": "portfolio-b302f"
+  },
+  "targets": {
+    "portfolio-b302f": {
+      "hosting": {
+        "devgrullonlabs": [
+          "devgrullonlabs"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
