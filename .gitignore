@@ -67,3 +67,6 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Superpowers subagent-driven-development scratch workspace (ledgers, briefs, review packages)
+.superpowers/
