@@ -873,7 +873,7 @@ Esto requiere el secreto `ANTHROPIC_API_KEY` disponible localmente. Antes de est
 firebase functions:secrets:set ANTHROPIC_API_KEY
 ```
 
-y luego exportar el valor para el emulador según la [documentación de secretos de Firebase](https://firebase.google.com/docs/functions/config-env?gen=2nd#secret_parameters) (el emulador pide crear un archivo `functions/.secret.local` con `ANTHROPIC_API_KEY=tu_clave`, que ya está cubierto por el patrón `*.local` en el `ignore` de `firebase.json` del Task 1, así que no se sube al repo).
+y luego exportar el valor para el emulador según la [documentación de secretos de Firebase](https://firebase.google.com/docs/functions/config-env?gen=2nd#secret_parameters) (el emulador pide crear un archivo `functions/.secret.local` con `ANTHROPIC_API_KEY=tu_clave`; ese patrón `*.local` está en `.gitignore` en la raíz del repo, así que no se sube — la exclusión es de git, no de `firebase.json`, que solo controla qué se sube al desplegar).
 
 Run: `firebase emulators:start --only functions,firestore`
 
@@ -1506,8 +1506,12 @@ Estos pasos no los ejecuta quien corre el plan — requieren tu cuenta/consola d
 3. **Registrar App Check** en Firebase Console → App Check → Apps → `DevGrullonLabs` → agregar proveedor reCAPTCHA v3 → copiar el site key.
 4. **Pegar ese site key** en `public/firebase-init.js`, reemplazando `RECAPTCHA_SITE_KEY = "REPLACE_WITH_YOUR_RECAPTCHA_V3_SITE_KEY"`, y hacer commit de ese cambio.
 5. **Configurar una alerta de presupuesto** en Google Cloud Billing para el proyecto `portfolio-b302f` (recomendado desde el diseño, para detectar gasto inesperado de la API de Claude).
-6. **Desplegar:**
+6. **Antes de desplegar, verifica que no vas a afectar otras cosas en el proyecto `portfolio-b302f`:**
+   - `firestore:rules` reemplaza TODO el ruleset de Firestore del proyecto, no solo lo de este chat. Si tu portafolio (`flutter_portfolio`) u otra app ya usa Firestore en este mismo proyecto, revisa sus reglas actuales primero (`firebase firestore:rules get` o cópialas desde la consola) y fusiónalas con `firestore.rules` de este repo antes de desplegar — no lo hagas si no estás seguro.
+   - Confirma que la base de datos de Firestore ya existe en `portfolio-b302f` (Firebase Console → Firestore Database). Si no existe, créala antes de desplegar — si no existe, el chat "funciona" pero las conversaciones nunca se guardan, sin ningún error visible.
+   - `firebase deploy --only functions` despliega el codebase `default` completo. Si ya tienes otras Cloud Functions en este proyecto bajo el mismo codebase, el CLI puede ofrecer *borrarlas* si no están en este repo — revisa el prompt del CLI con cuidado antes de confirmar, o corre `firebase functions:list` primero para saber qué hay.
+7. **Desplegar:**
    ```bash
    firebase deploy --only functions,firestore:rules,hosting:devgrullonlabs
    ```
-7. **Smoke test en producción:** repetir la verificación del Task 9 / Step 7 pero contra el sitio ya desplegado, y confirmar en la consola de Firestore que las conversaciones reales quedan guardadas.
+8. **Smoke test en producción:** repetir la verificación del Task 9 / Step 7 pero contra el sitio ya desplegado, y confirmar en la consola de Firestore que las conversaciones reales quedan guardadas.

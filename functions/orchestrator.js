@@ -1,6 +1,6 @@
-const { validateMessages, hasReachedCap, buildCapResponse } = require("./chatLogic");
+const { validateMessages, hasReachedCap, buildCapResponse, MAX_USER_MESSAGES } = require("./chatLogic");
 
-async function handleChatRequest({ messages, callClaude, persistTurn, now }) {
+async function handleChatRequest({ messages, callClaude, persistTurn, now, trustedUserMessageCount }) {
   const validation = validateMessages(messages);
   if (!validation.valid) {
     const error = new Error(validation.reason);
@@ -10,7 +10,11 @@ async function handleChatRequest({ messages, callClaude, persistTurn, now }) {
 
   const lastUserMessage = [...messages].reverse().find((message) => message.role === "user");
 
-  const result = hasReachedCap(messages) ? buildCapResponse() : await callClaude(messages);
+  const cappedByTrustedHistory =
+    typeof trustedUserMessageCount === "number" && trustedUserMessageCount >= MAX_USER_MESSAGES;
+
+  const result =
+    cappedByTrustedHistory || hasReachedCap(messages) ? buildCapResponse() : await callClaude(messages);
 
   try {
     await persistTurn({

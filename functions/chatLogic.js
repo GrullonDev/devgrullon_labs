@@ -1,10 +1,19 @@
 const MAX_USER_MESSAGES = 14;
 const MAX_MESSAGE_LENGTH = 2000;
+const MAX_MESSAGES_PER_REQUEST = 40;
+const MAX_TOTAL_CHARACTERS = 40000;
 
 function validateMessages(messages) {
   if (!Array.isArray(messages) || messages.length === 0) {
     return { valid: false, reason: "messages debe ser un arreglo no vacío." };
   }
+  if (messages.length > MAX_MESSAGES_PER_REQUEST) {
+    return {
+      valid: false,
+      reason: `La conversación supera el máximo de ${MAX_MESSAGES_PER_REQUEST} mensajes.`,
+    };
+  }
+  let totalCharacters = 0;
   for (const message of messages) {
     if (!message || (message.role !== "user" && message.role !== "assistant")) {
       return { valid: false, reason: "Cada mensaje debe tener role 'user' o 'assistant'." };
@@ -18,6 +27,13 @@ function validateMessages(messages) {
         reason: `El mensaje supera el máximo de ${MAX_MESSAGE_LENGTH} caracteres.`,
       };
     }
+    totalCharacters += message.content.length;
+  }
+  if (totalCharacters > MAX_TOTAL_CHARACTERS) {
+    return {
+      valid: false,
+      reason: `La conversación supera el máximo de ${MAX_TOTAL_CHARACTERS} caracteres en total.`,
+    };
   }
   return { valid: true };
 }
@@ -43,6 +59,8 @@ function buildCapResponse() {
 module.exports = {
   MAX_USER_MESSAGES,
   MAX_MESSAGE_LENGTH,
+  MAX_MESSAGES_PER_REQUEST,
+  MAX_TOTAL_CHARACTERS,
   validateMessages,
   countUserMessages,
   hasReachedCap,

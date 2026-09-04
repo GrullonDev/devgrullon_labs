@@ -12,6 +12,7 @@ const { logTurn } = require("./firestoreLog");
 initializeApp();
 
 const anthropicApiKey = defineSecret("ANTHROPIC_API_KEY");
+const SESSION_ID_PATTERN = /^[0-9a-f-]{36}$/i;
 
 exports.chatWithAssistant = onCall(
   { secrets: [anthropicApiKey], enforceAppCheck: true, region: "us-central1" },
@@ -21,13 +22,31 @@ exports.chatWithAssistant = onCall(
     if (typeof sessionId !== "string" || sessionId.length === 0) {
       throw new HttpsError("invalid-argument", "sessionId es requerido.");
     }
+    if (!SESSION_ID_PATTERN.test(sessionId)) {
+      throw new HttpsError("invalid-argument", "sessionId inválido.");
+    }
 
     const anthropic = new Anthropic({ apiKey: anthropicApiKey.value() });
     const db = getFirestore();
+    const sessionDocRef = db.collection("chat_leads").doc(sessionId);
 
     try {
+      // Este read es un respaldo para el tope de costo, no una dependencia dura: si Firestore
+      // no está disponible, el chat sigue funcionando con el tope basado en el arreglo del
+      // cliente (igual que antes de existir este respaldo) en vez de fallar por completo.
+      let sessionSnapshot = null;
+      let trustedUserMessageCount;
+      try {
+        sessionSnapshot = await sessionDocRef.get();
+        const storedMessages = sessionSnapshot.exists ? sessionSnapshot.data().messages || [] : [];
+        trustedUserMessageCount = storedMessages.filter((m) => m.role === "user").length;
+      } catch (readError) {
+        console.error("No se pudo leer el historial de la sesión en Firestore", readError);
+      }
+
       return await handleChatRequest({
         messages,
+        trustedUserMessageCount,
         callClaude: async (reqMessages) => {
           try {
             const apiResponse = await anthropic.messages.create(
@@ -45,7 +64,7 @@ exports.chatWithAssistant = onCall(
             };
           }
         },
-        persistTurn: (turnData) => logTurn(db, sessionId, turnData),
+        persistTurn: (turnData) => logTurn(db, sessionId, turnData, sessionSnapshot),
         now: () => new Date(),
       });
     } catch (error) {

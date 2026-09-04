@@ -25,6 +25,12 @@ const RECAPTCHA_SITE_KEY = "REPLACE_WITH_YOUR_RECAPTCHA_V3_SITE_KEY";
 
 export const app = initializeApp(firebaseConfig);
 
+if (RECAPTCHA_SITE_KEY.startsWith("REPLACE_WITH_")) {
+  console.error(
+    "[DevGrullon Labs] App Check site key sin configurar en firebase-init.js — el chat con IA no funcionará hasta reemplazarla (ver README.md, sección 'Antes de desplegar')."
+  );
+}
+
 initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
   isTokenAutoRefreshEnabled: true,

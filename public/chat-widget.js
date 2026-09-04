@@ -61,11 +61,14 @@ function hideTypingIndicator() {
   if (indicator) indicator.remove();
 }
 
+const GREETING_MESSAGE =
+  "¡Hola! 👋 Soy el asistente virtual de DevGrullon Labs 🤖. Cuéntame qué necesitas y te ayudo, o te conecto con Jorge por WhatsApp.";
+
+// El saludo se muestra en la UI pero NO entra a `history`: la API de Claude exige que el
+// primer mensaje del arreglo tenga role "user", así que un saludo del asistente en la
+// posición 0 haría que cada primer turno fallara con un 400.
 function renderGreeting() {
-  appendBubble(
-    "assistant",
-    "¡Hola! 👋 Soy el asistente virtual de DevGrullon Labs 🤖. Cuéntame qué necesitas y te ayudo, o te conecto con Jorge por WhatsApp."
-  );
+  appendBubble("assistant", GREETING_MESSAGE);
 }
 
 async function sendMessage(text) {
@@ -80,8 +83,8 @@ async function sendMessage(text) {
     history.push({ role: "assistant", content: reply });
     hideTypingIndicator();
     appendBubble("assistant", reply);
-    if (handoff && whatsappSummary) {
-      appendHandoffCta(whatsappSummary);
+    if (handoff) {
+      appendHandoffCta(whatsappSummary || "Hola Jorge, vengo del chat de tu sitio.");
     }
   } catch (error) {
     console.error("chatWithAssistant failed", error);

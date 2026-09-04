@@ -3,6 +3,8 @@ const assert = require("node:assert/strict");
 const {
   MAX_USER_MESSAGES,
   MAX_MESSAGE_LENGTH,
+  MAX_MESSAGES_PER_REQUEST,
+  MAX_TOTAL_CHARACTERS,
   validateMessages,
   countUserMessages,
   hasReachedCap,
@@ -41,6 +43,24 @@ test("validateMessages rejects a message over the character limit", () => {
   const result = validateMessages([
     { role: "user", content: "a".repeat(MAX_MESSAGE_LENGTH + 1) },
   ]);
+  assert.equal(result.valid, false);
+});
+
+test("validateMessages rejects more than MAX_MESSAGES_PER_REQUEST messages", () => {
+  const messages = Array.from({ length: MAX_MESSAGES_PER_REQUEST + 1 }, (_, i) => ({
+    role: i % 2 === 0 ? "user" : "assistant",
+    content: "hola",
+  }));
+  const result = validateMessages(messages);
+  assert.equal(result.valid, false);
+});
+
+test("validateMessages rejects a conversation whose total characters exceed MAX_TOTAL_CHARACTERS", () => {
+  const messages = Array.from({ length: 21 }, (_, i) => ({
+    role: i % 2 === 0 ? "user" : "assistant",
+    content: "a".repeat(2000),
+  }));
+  const result = validateMessages(messages);
   assert.equal(result.valid, false);
 });
 

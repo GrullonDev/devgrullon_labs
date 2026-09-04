@@ -40,6 +40,23 @@ test("skips calling Claude and forces a handoff once the message cap is reached"
   assert.equal(result.handoff, true);
 });
 
+test("forces a handoff based on the server-trusted message count even if the client's own array is short", async () => {
+  let claudeCalled = false;
+  const result = await handleChatRequest({
+    messages: [{ role: "user", content: "hola de nuevo" }],
+    trustedUserMessageCount: 14,
+    callClaude: async () => {
+      claudeCalled = true;
+      return { reply: "no debería llegar aquí", handoff: false, whatsapp_summary: "" };
+    },
+    persistTurn: async () => {},
+    now: () => new Date(),
+  });
+
+  assert.equal(claudeCalled, false);
+  assert.equal(result.handoff, true);
+});
+
 test("rejects an empty messages array before calling Claude", async () => {
   await assert.rejects(
     () =>

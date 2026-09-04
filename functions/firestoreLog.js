@@ -12,9 +12,9 @@ function buildLeadDocUpdate({ userMessage, assistantReply, handoff, whatsappSumm
   };
 }
 
-async function logTurn(db, sessionId, turnData) {
+async function logTurn(db, sessionId, turnData, existingSnapshot) {
   const docRef = db.collection("chat_leads").doc(sessionId);
-  const snapshot = await docRef.get();
+  const snapshot = existingSnapshot || (await docRef.get());
   const { newMessages, ...rest } = buildLeadDocUpdate(turnData);
 
   const payload = {
