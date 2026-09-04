@@ -381,24 +381,6 @@
     </div>
 
     <script src="index.js"></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-      import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyDHyhxZ0ulrmqtxrn6RUEOzTjnVTAhB2eY",
-        authDomain: "portfolio-b302f.firebaseapp.com",
-        projectId: "portfolio-b302f",
-        storageBucket: "portfolio-b302f.firebasestorage.app",
-        messagingSenderId: "399657046600",
-        appId: "1:399657046600:web:a9e192773ad981592dbe7d",
-        measurementId: "G-X8LWT6LPB3",
-      };
-
-      const app = initializeApp(firebaseConfig);
-      isSupported().then((supported) => {
-        if (supported) getAnalytics(app);
-      });
-    </script>
+    <script type="module" src="firebase-init.js"></script>
   </body>
 </html>
