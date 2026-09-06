@@ -5,7 +5,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
 import {
   initializeAppCheck,
-  ReCaptchaV3Provider,
+  ReCaptchaEnterpriseProvider,
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app-check.js";
 import { getFunctions } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-functions.js";
 
@@ -19,20 +19,13 @@ const firebaseConfig = {
   measurementId: "G-X8LWT6LPB3",
 };
 
-// Reemplaza esto con tu site key real de App Check antes de desplegar a producción:
-// Firebase Console → App Check → Apps → DevGrullonLabs → registrar proveedor reCAPTCHA v3.
-const RECAPTCHA_SITE_KEY = "REPLACE_WITH_YOUR_RECAPTCHA_V3_SITE_KEY";
+// Firebase Console → App Check → Apps → DevGrullonLabs → proveedor reCAPTCHA Enterprise.
+const RECAPTCHA_SITE_KEY = "6LcA-6wtAAAAALapjfDz_OqSaT1aI3YHA5XoDjax";
 
 export const app = initializeApp(firebaseConfig);
 
-if (RECAPTCHA_SITE_KEY.startsWith("REPLACE_WITH_")) {
-  console.error(
-    "[DevGrullon Labs] App Check site key sin configurar en firebase-init.js — el chat con IA no funcionará hasta reemplazarla (ver README.md, sección 'Antes de desplegar')."
-  );
-}
-
 initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
+  provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_SITE_KEY),
   isTokenAutoRefreshEnabled: true,
 });
 

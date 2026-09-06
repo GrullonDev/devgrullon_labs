@@ -57,7 +57,7 @@ firebase serve --only hosting
 El chat con IA necesita configuración adicional que no viene en el repo (por seguridad):
 
 1. Crear una API key en [platform.deepseek.com](https://platform.deepseek.com) y guardarla como secreto: `firebase functions:secrets:set DEEPSEEK_API_KEY` (el comando pedirá el valor en un segundo paso — no lo pases como argumento).
-2. Registrar un proveedor reCAPTCHA v3 en Firebase Console → App Check, y pegar ese site key en `public/firebase-init.js` (reemplazando `RECAPTCHA_SITE_KEY`).
+2. Registrar un proveedor reCAPTCHA Enterprise en Firebase Console → App Check, y pegar ese site key en `public/firebase-init.js` (constante `RECAPTCHA_SITE_KEY`). ✅ Ya configurado.
 3. Confirmar que la base de datos de Firestore existe en el proyecto de Firebase.
 4. Desplegar con `firebase deploy --only functions,firestore:rules,hosting:devgrullonlabs`.
 
