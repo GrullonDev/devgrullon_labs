@@ -31,20 +31,14 @@
         </p>
 
         <div class="hero-actions">
-          <a
-            class="btn btn-neon"
-            id="cta-whatsapp"
-            href="https://wa.me/50242909548?text=Hola%2C%20quiero%20mi%20p%C3%A1gina%20web%20por%20Q500"
-            target="_blank"
-            rel="noopener"
-          >
+          <button type="button" class="btn btn-neon" id="hero-cta-chat">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path
                 d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2 22l5.41-1.35a9.85 9.85 0 0 0 4.63 1.15h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.86 9.86 0 0 0 12.04 2zm5.79 14.13c-.24.68-1.4 1.31-1.93 1.38-.5.07-1.11.1-1.79-.11-.41-.13-.94-.3-1.62-.59-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.55-1.16-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.17-.3.37-.43.5-.14.14-.29.29-.12.57.17.29.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.44.29.14.46.12.63-.07.17-.19.71-.83.9-1.11.19-.29.38-.24.63-.14.26.1 1.63.77 1.91.91.29.14.48.21.55.33.07.12.07.68-.17 1.36z"
               />
             </svg>
             Quiero mi web por Q500
-          </a>
+          </button>
 
           <a class="hero-link" href="https://jorgegrullondev.com/" target="_blank" rel="noopener">
             O explora mi portafolio avanzado en jorgegrullondev.com
@@ -217,32 +211,57 @@
         <h2>¿Proyectos más <span class="highlight">complejos</span>?</h2>
 
         <p>
-          Para aplicaciones web dinámicas, e-commerce, bases de datos o
-          integraciones personalizadas, DevGrullon Labs ofrece ingeniería de
-          software a medida.
+          Para aplicaciones web dinámicas, aplicaciones móviles, sistemas a
+          medida o integraciones con pasarelas de pago, cuento con
+          <strong>Desarrollos Digitales GT</strong>, mi otro negocio
+          enfocado en soluciones digitales completas para empresas.
         </p>
 
-        <a
-          class="btn btn-lab"
-          href="https://jorgegrullondev.com/"
-          target="_blank"
-          rel="noopener"
-        >
-          Visita mi portafolio profesional
-          <span class="btn-lab-url">jorgegrullondev.com</span>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
+        <div class="portfolio-links">
+          <a
+            class="btn btn-lab"
+            href="https://desarrollosdigitalesgt.com/"
+            target="_blank"
+            rel="noopener"
           >
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
-          </svg>
-        </a>
+            Conoce Desarrollos Digitales GT
+            <span class="btn-lab-url">desarrollosdigitalesgt.com</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+
+          <a
+            class="btn btn-lab"
+            href="https://jorgegrullondev.com/"
+            target="_blank"
+            rel="noopener"
+          >
+            Visita mi portafolio profesional
+            <span class="btn-lab-url">jorgegrullondev.com</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -317,24 +336,37 @@
       </div>
     </section>
 
+    <section id="privacidad" class="privacy-note">
+      <div class="privacy-note-content">
+        <h2>Aviso de privacidad</h2>
+        <p>
+          Si usas el asistente de chat de este sitio, guardamos el contenido de esa
+          conversación (los mensajes que escribes y las respuestas del asistente) para
+          poder darte seguimiento y mejorar las respuestas. No se usa para otro fin ni
+          se comparte con terceros. No necesitas dar tu nombre real ni ningún dato
+          personal para usar el chat.
+        </p>
+      </div>
+    </section>
+
     <footer class="site-footer">
       <div class="footer-content">
         <span class="footer-brand">DevGrullon Labs</span>
         <span class="footer-copy">&copy; <span id="footer-year"></span> Todos los derechos reservados.</span>
         <nav class="footer-links">
           <a href="#">Términos y condiciones</a>
-          <a href="#">Aviso de privacidad</a>
+          <a href="#privacidad">Aviso de privacidad</a>
         </nav>
       </div>
     </footer>
 
     <div class="whatsapp-widget" id="whatsapp-widget">
-      <div class="whatsapp-chat-window" id="whatsapp-chat-window" role="dialog" aria-label="Chat de WhatsApp" hidden>
+      <div class="whatsapp-chat-window" id="whatsapp-chat-window" role="dialog" aria-label="Chat con el asistente virtual" hidden>
         <div class="whatsapp-chat-header">
           <img class="whatsapp-chat-avatar" src="assets/logo.png" alt="DevGrullon Labs" />
           <div class="whatsapp-chat-header-info">
             <span class="whatsapp-chat-name">DevGrullon Labs</span>
-            <span class="whatsapp-chat-status">Normalmente responde en minutos</span>
+            <span class="whatsapp-chat-status">Asistente virtual · Respuestas al instante</span>
           </div>
           <button type="button" class="whatsapp-chat-close" id="whatsapp-chat-close" aria-label="Cerrar chat">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -343,12 +375,7 @@
             </svg>
           </button>
         </div>
-        <div class="whatsapp-chat-body">
-          <div class="whatsapp-chat-bubble">
-            ¡Hola! 👋 Soy Jorge, de DevGrullon Labs. Escribe tu mensaje y te
-            responderé por WhatsApp lo antes posible.
-          </div>
-        </div>
+        <div class="whatsapp-chat-body" id="whatsapp-chat-messages" aria-live="polite"></div>
         <form class="whatsapp-chat-form" id="whatsapp-chat-form">
           <textarea
             id="whatsapp-chat-input"
@@ -357,7 +384,7 @@
             rows="1"
             required
           ></textarea>
-          <button type="submit" class="whatsapp-chat-send" aria-label="Enviar por WhatsApp">
+          <button type="submit" class="whatsapp-chat-send" aria-label="Enviar mensaje">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
             </svg>
@@ -381,24 +408,7 @@
     </div>
 
     <script src="index.js"></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-      import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyDHyhxZ0ulrmqtxrn6RUEOzTjnVTAhB2eY",
-        authDomain: "portfolio-b302f.firebaseapp.com",
-        projectId: "portfolio-b302f",
-        storageBucket: "portfolio-b302f.firebasestorage.app",
-        messagingSenderId: "399657046600",
-        appId: "1:399657046600:web:a9e192773ad981592dbe7d",
-        measurementId: "G-X8LWT6LPB3",
-      };
-
-      const app = initializeApp(firebaseConfig);
-      isSupported().then((supported) => {
-        if (supported) getAnalytics(app);
-      });
-    </script>
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="chat-widget.js"></script>
   </body>
 </html>

@@ -67,3 +67,10 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Superpowers subagent-driven-development scratch workspace (ledgers, briefs, review packages)
+.superpowers/
+
+# Firebase Functions local secrets (contains ANTHROPIC_API_KEY)
+functions/.secret.local
+*.local
