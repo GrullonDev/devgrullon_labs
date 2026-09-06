@@ -63,6 +63,24 @@ El chat con IA necesita configuración adicional que no viene en el repo (por se
 
 Detalle completo de estos pasos, incluyendo advertencias sobre no afectar otras apps que compartan el mismo proyecto de Firebase, en `docs/superpowers/plans/2026-09-03-ai-chat-assistant.md` (sección final).
 
+## Deploy automático (GitHub Actions)
+
+Cada push a `main` dispara `.github/workflows/deploy.yml`, que instala las dependencias de `functions/` y corre `firebase deploy --only functions,firestore:rules,hosting:devgrullonlabs`. No hace falta desplegar a mano después de mergear un PR.
+
+**Configuración única (ya requerida, si no está hecha):**
+
+1. Crear una cuenta de servicio con permisos de deploy: Firebase Console → ⚙️ Configuración del proyecto → Cuentas de servicio → **Generar nueva clave privada** (descarga un `.json`). Si prefieres desde Google Cloud Console, el rol necesario es **Firebase Admin** (`roles/firebase.admin`) sobre el proyecto `portfolio-b302f`.
+2. En GitHub: repo → **Settings → Secrets and variables → Actions → New repository secret**.
+   - Nombre: `FIREBASE_SERVICE_ACCOUNT`
+   - Valor: el contenido completo del `.json` descargado.
+3. Listo — el siguiente push a `main` (o merge de PR) despliega solo.
+
+Puedes ver el progreso en la pestaña **Actions** del repo en GitHub. El secreto `DEEPSEEK_API_KEY` (Firebase Secret Manager) no se toca aquí — ese vive en Firebase, no en GitHub.
+
+## Caché del navegador
+
+`firebase.json` fuerza `Cache-Control: no-cache, must-revalidate` en todo lo que sirve Hosting. Esto no desactiva la caché — el navegador sigue guardando una copia, pero la revalida contra Firebase Hosting en cada carga antes de usarla. Así, cuando el sitio se actualiza (por ejemplo, tras un deploy automático), los visitantes ven la versión nueva sin necesidad de un hard refresh ni de limpiar caché manualmente.
+
 ## Contacto
 
 El sitio dirige todo el contacto al WhatsApp del negocio (número configurado en `index.js`).
