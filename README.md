@@ -67,13 +67,9 @@ Detalle completo de estos pasos, incluyendo advertencias sobre no afectar otras 
 
 Cada push a `main` dispara `.github/workflows/deploy.yml`, que instala las dependencias de `functions/` y corre `firebase deploy --only functions,firestore:rules,hosting:devgrullonlabs`. No hace falta desplegar a mano después de mergear un PR.
 
-**Configuración única (ya requerida, si no está hecha):**
+**Configuración única:** ✅ ya hecha — el secreto `FIREBASE_SERVICE_ACCOUNT_PORTFOLIO_B302F` (cuenta de servicio con rol Firebase Admin sobre `portfolio-b302f`) ya está en GitHub → Settings → Secrets and variables → Actions.
 
-1. Crear una cuenta de servicio con permisos de deploy: Firebase Console → ⚙️ Configuración del proyecto → Cuentas de servicio → **Generar nueva clave privada** (descarga un `.json`). Si prefieres desde Google Cloud Console, el rol necesario es **Firebase Admin** (`roles/firebase.admin`) sobre el proyecto `portfolio-b302f`.
-2. En GitHub: repo → **Settings → Secrets and variables → Actions → New repository secret**.
-   - Nombre: `FIREBASE_SERVICE_ACCOUNT`
-   - Valor: el contenido completo del `.json` descargado.
-3. Listo — el siguiente push a `main` (o merge de PR) despliega solo.
+Si algún día hay que regenerarlo: Firebase Console → ⚙️ Configuración del proyecto → Cuentas de servicio → **Generar nueva clave privada** (descarga un `.json`), y reemplaza el valor de ese mismo secreto en GitHub.
 
 Puedes ver el progreso en la pestaña **Actions** del repo en GitHub. El secreto `DEEPSEEK_API_KEY` (Firebase Secret Manager) no se toca aquí — ese vive en Firebase, no en GitHub.
 

@@ -23,7 +23,7 @@ jobs:
       - name: Autenticar con Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTFOLIO_B302F }}
 
       - name: Desplegar a Firebase
         run: npx firebase-tools@15 deploy --only functions,firestore:rules,hosting:devgrullonlabs --project portfolio-b302f --non-interactive
