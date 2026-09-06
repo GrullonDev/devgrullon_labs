@@ -529,8 +529,16 @@ body{
   margin-bottom:2.25rem;
 }
 
+.portfolio-links{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
 .btn-lab{
-  margin:0 auto;
+  margin:0;
   flex-wrap:wrap;
   background:var(--surface-container-lowest);
   color:var(--brand-navy);

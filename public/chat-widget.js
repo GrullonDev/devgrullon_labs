@@ -6,6 +6,7 @@ const SESSION_STORAGE_KEY = "devgrullonlabs.chatSessionId";
 
 const chatWithAssistant = httpsCallable(functions, "chatWithAssistant");
 
+const heroCtaChat = document.getElementById("hero-cta-chat");
 const whatsappFloat = document.getElementById("whatsapp-float");
 const whatsappBadge = document.getElementById("whatsapp-badge");
 const chatWindow = document.getElementById("whatsapp-chat-window");
@@ -120,6 +121,19 @@ function hideBadge() {
 function showBadge() {
   if (!whatsappBadge) return;
   if (chatWindow.hasAttribute("hidden")) whatsappBadge.hidden = false;
+}
+
+const HERO_CTA_MESSAGE = "Quiero mi web por Q500";
+
+if (heroCtaChat) {
+  heroCtaChat.addEventListener("click", (event) => {
+    // El botón vive fuera de #whatsapp-widget, así que sin esto el listener
+    // global de "clic afuera" (más abajo) cerraría el chat en el mismo clic.
+    event.stopPropagation();
+    const isFirstOpen = history.length === 0;
+    toggleChat(true);
+    if (isFirstOpen) sendMessage(HERO_CTA_MESSAGE);
+  });
 }
 
 if (whatsappFloat) {
